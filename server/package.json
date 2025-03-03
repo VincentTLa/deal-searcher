@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "This folder is the core functionality to retrieve data from the ozBargain application and send to frontend",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
@@ -13,7 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "cheerio": "^1.0.0",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^24.3.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
