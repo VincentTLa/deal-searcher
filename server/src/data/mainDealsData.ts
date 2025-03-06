@@ -1,10 +1,10 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-export async function categoryData(category: string, page: string) {
+export async function mainDealsData(page: string) {
   try {
     const response = await axios.get(
-      `https://www.ozbargain.com.au/cat/${category}/feed?page=${page}`,
+      `https://www.ozbargain.com.au/deals/feed?page=${page}`,
     );
     const html = response.data;
 
