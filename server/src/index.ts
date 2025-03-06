@@ -40,19 +40,20 @@ app.get(
   },
 );
 
-app.get(
-  'item/:itemNumber',
-  async (req: Request, res: Response): Promise<void> => {
-    const { itemNumber } = req.params;
+// TODO: Single Item retrieval
+// app.get(
+//   'item/:itemNumber',
+//   async (req: Request, res: Response): Promise<void> => {
+//     const { itemNumber } = req.params;
 
-    try {
-      const data = await itemData(itemNumber);
-      res.send(data);
-    } catch (error) {
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  },
-);
+//     try {
+//       const data = await itemData(itemNumber);
+//       res.send(data);
+//     } catch (error) {
+//       res.status(500).json({ error: 'Internal server error' });
+//     }
+//   },
+// );
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

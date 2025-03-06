@@ -1,34 +1,12 @@
 import axios from 'axios';
-import * as cheerio from 'cheerio';
+import { itemDetailHelper } from '../helpers/itemDetailHelper';
 
 export async function categoryData(category: string, page: string) {
   try {
     const response = await axios.get(
       `https://www.ozbargain.com.au/cat/${category}/feed?page=${page}`,
     );
-    const html = response.data;
-
-    const $ = cheerio.load(html);
-
-    const data = $('item')
-      .map((index, element) => {
-        const categories: string[] = [];
-        $(element)
-          .find('category')
-          .each((i, cat) => {
-            categories.push($(cat).text());
-          });
-
-        return {
-          title: $(element).find('title').text(),
-          link: $(element).find('link').text(),
-          description: $(element).find('description').text(),
-          pubDate: $(element).find('pubDate').text(),
-          categories: categories,
-          image: $(element).find('media\\:thumbnail').attr('url'),
-        };
-      })
-      .get();
+    const data = itemDetailHelper(response.data);
 
     return data;
   } catch (error) {
