@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import { categoryData } from './data/categoryData';
 import { mainDealsData } from './data/mainDealsData';
@@ -9,6 +10,8 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors());
 
 app.get('/', async (req: Request, res: Response) => {
   // const data = await categoryData();
