@@ -1,11 +1,12 @@
 import { Image, StyleSheet, View } from 'react-native';
 
 import { useEffect, useState } from 'react';
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import axios from 'axios';
+import { mockData } from '@/constants/data';
+import { Card } from '@/components/Card';
 
 type ItemDetails = {
   title: string;
@@ -27,9 +28,11 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/main-deals/1');
-        const arrayItems: Array<ItemDetails> = response.data;
-        setData(arrayItems);
+        // TODO: REMOVE MOCKDATA AND USE URL ONCE DESIGN IS COMPLETE
+        // const response = await axios.get('http://localhost:3000/main-deals/1');
+        // const arrayItems: Array<ItemDetails> = response.data;
+        const response = mockData;
+        setData(response);
       } catch (error) {
         setError(true);
       } finally {
@@ -43,6 +46,7 @@ export default function HomeScreen() {
   console.log(data);
 
   return (
+    // TODO: REMOVE HEADER TO SUIT FIGMA
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
@@ -52,51 +56,27 @@ export default function HomeScreen() {
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
       <ThemedView style={styles.itemContainer}>
-        <ThemedText type="subtitle">Data Load</ThemedText>
         <ThemedText>{loading ? 'Please wait' : ''}</ThemedText>
         <View>
           {data
             ? data.map((item, i) => {
                 return (
-                  <View style={styles.stepContainer}>
-                    {item.title}
-                    {item.categories}
-                  </View>
+                  <Card
+                    key={i}
+                    imageUrl={item.image}
+                    pubDate={item.pubDate}
+                    categories={item.categories}
+                    title={item.title}
+                    description={item.description}
+                    link={item.link}
+                  />
                 );
               })
             : ''}
         </View>
         <ThemedText>{error ? error : ''}</ThemedText>
       </ThemedView>
-
-      {/* <ThemedView>
-        {data.map((item, index) => (
-          <ThemedText key={index}>{item}</ThemedText>
-        ))}
-      </ThemedView> */}
-      {/* <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{' '}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{' '}
-          directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView> */}
     </ParallaxScrollView>
   );
 }
@@ -119,6 +99,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   itemContainer: {
-    padding: 10,
+    padding: 0,
   },
 });
